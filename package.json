@@ -1,0 +1,22 @@
+{
+  "name": "musickitql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "update-schema": "node ./scripts/updateSchema.js"
+  },
+  "author": "Vincent Riemer",
+  "license": "BlueOak-1.0.0",
+  "dependencies": {
+    "dataloader": "^1.4.0",
+    "express": "^4.16.3",
+    "express-graphql": "^0.6.12",
+    "graphql": "^0.13.2",
+    "graphql-connection": "^2.0.1",
+    "graphql-relay": "^0.5.5",
+    "graphql-yoga": "^1.14.12",
+    "node-fetch": "^2.1.2"
+  }
+}

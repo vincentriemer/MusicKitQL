@@ -1,0 +1,171 @@
+type Artwork {
+  bgColor: String
+  textColor1: String
+  textColor2: String
+  textColor3: String
+  textColor4: String
+  width: Int
+  height: Int!
+  url: String!
+}
+
+type LibraryAlbum implements Node {
+  """The ID of an object"""
+  id: ID!
+  type: String!
+  artistName: String!
+  artwork: Artwork!
+  contentRating: String
+  name: String!
+  playParams: PlayParameters
+  trackCount: Int!
+  artists(after: String, first: Int, before: String, last: Int): LibraryArtistConnection
+  tracks(after: String, first: Int, before: String, last: Int): LibrarySongConnection
+}
+
+"""A connection to a list of items."""
+type LibraryAlbumConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LibraryAlbumEdge]
+}
+
+"""An edge in a connection."""
+type LibraryAlbumEdge {
+  """The item at the end of the edge"""
+  node: LibraryAlbum
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type LibraryArtist implements Node {
+  """The ID of an object"""
+  id: ID!
+  type: String!
+  name: String!
+  albums(after: String, first: Int, before: String, last: Int): LibraryAlbumConnection
+}
+
+"""A connection to a list of items."""
+type LibraryArtistConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LibraryArtistEdge]
+}
+
+"""An edge in a connection."""
+type LibraryArtistEdge {
+  """The item at the end of the edge"""
+  node: LibraryArtist
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type LibraryPlaylist implements Node {
+  """The ID of an object"""
+  id: ID!
+  type: String!
+  artwork: Artwork
+  description: String
+  name: String!
+  playParams: PlayParameters
+  canEdit: Boolean!
+  tracks(after: String, first: Int, before: String, last: Int): LibrarySongConnection
+}
+
+"""A connection to a list of items."""
+type LibraryPlaylistConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LibraryPlaylistEdge]
+}
+
+"""An edge in a connection."""
+type LibraryPlaylistEdge {
+  """The item at the end of the edge"""
+  node: LibraryPlaylist
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type LibrarySong implements Node {
+  """The ID of an object"""
+  id: ID!
+  mkId: String!
+  type: String!
+  albumName: String!
+  artistName: String!
+  artwork: Artwork!
+  contentRating: String
+  discNumber: Int!
+  durationInMillis: Int
+  name: String!
+  playParams: PlayParameters
+  trackNumber: Int!
+  albums(after: String, first: Int, before: String, last: Int): LibraryAlbumConnection
+  artists(after: String, first: Int, before: String, last: Int): LibraryArtistConnection
+}
+
+"""A connection to a list of items."""
+type LibrarySongConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [LibrarySongEdge]
+}
+
+"""An edge in a connection."""
+type LibrarySongEdge {
+  """The item at the end of the edge"""
+  node: LibrarySong
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: String
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: String
+}
+
+type PlayParameters {
+  id: String!
+  kind: String!
+}
+
+type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
+  libraryAlbums(after: String, first: Int, before: String, last: Int): LibraryAlbumConnection
+  libraryPlaylists(after: String, first: Int, before: String, last: Int): LibraryPlaylistConnection
+  libraryArtists(after: String, first: Int, before: String, last: Int): LibraryArtistConnection
+}
